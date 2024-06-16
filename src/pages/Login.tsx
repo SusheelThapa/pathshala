@@ -1,13 +1,22 @@
-import { useRef, useState, FormEvent } from "react";
-import { Link } from "react-router-dom";
-import { IoMailOutline, IoLockClosedOutline, IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
+import { useRef, useState, FormEvent, useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { AuthContext } from "../components/AuthContext";
+import {
+  IoPersonAddOutline,
+  IoLockClosedOutline,
+  IoEyeOutline,
+  IoEyeOffOutline,
+} from "react-icons/io5";
 
 import logo from "../../public/logo/logo.webp";
 
 const Login: React.FC = () => {
-  const emailRef = useRef<HTMLInputElement>(null);
+  const usernameRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
   const [showPassword, setShowPassword] = useState<boolean>(false);
+  const { setToken } = useContext(AuthContext)!;
+  const navigate = useNavigate();
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -15,18 +24,24 @@ const Login: React.FC = () => {
 
   const handleLogin = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault(); // Prevent default form submission behavior
-    const email = emailRef.current?.value;
+    const username = usernameRef.current?.value;
     const password = passwordRef.current?.value;
 
-    // Ensure email and password are not null
-    if (email && password) {
+    // Ensure username and password are not null
+    if (username && password) {
       try {
-      //  API Call
+        const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/auth/login`, {
+          username,
+          password,
+        });
+        setToken(response.data.token);
+        localStorage.setItem("token", response.data.token);
+        navigate("/dashboard");
       } catch (error) {
-        console.error('Error:', error);
+        console.error("Error:", error);
       }
     } else {
-      console.error('Email or password is missing');
+      console.error("Username or password is missing");
     }
   };
 
@@ -46,26 +61,35 @@ const Login: React.FC = () => {
         </div>
         <form className="mt-12 space-y-6" onSubmit={handleLogin}>
           <div className="flex flex-col space-y-2">
-            <label htmlFor="email" className="text-sm font-medium text-gray-700">
-              Email
+            <label
+              htmlFor="username"
+              className="text-sm font-medium text-gray-700"
+            >
+              Username
             </label>
             <div className="relative flex items-center">
-              <IoMailOutline className="absolute ml-3 text-lg text-gray-600" />
+              <IoPersonAddOutline className="absolute ml-3 text-lg text-gray-600" />
               <input
-                id="email"
-                name="email"
-                type="email"
+                id="username"
+                name="username"
+                type="username"
                 required
                 className="w-full pl-10 pr-3 py-3 text-sm border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-[#f96a46]"
-                placeholder="susheel@pathshala.com"
-                ref={emailRef}
+                placeholder="Enter your username"
+                ref={usernameRef}
               />
             </div>
           </div>
           <div className="flex flex-col space-y-2">
-            <label htmlFor="password" className="text-sm font-medium text-gray-700 flex justify-between">
+            <label
+              htmlFor="password"
+              className="text-sm font-medium text-gray-700 flex justify-between"
+            >
               Password
-              <Link to="/forgot-password" className="text-sm text-[#f96a46] hover:text-[#df5938]">
+              <Link
+                to="/forgot-password"
+                className="text-sm text-[#f96a46] hover:text-[#df5938]"
+              >
                 Forgot Password?
               </Link>
             </label>

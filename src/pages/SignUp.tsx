@@ -1,5 +1,6 @@
 import { useRef, useState, FormEvent } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 import {
   IoMailOutline,
   IoLockClosedOutline,
@@ -17,6 +18,7 @@ const SignUp: React.FC = () => {
   const passwordRef = useRef<HTMLInputElement>(null);
   const [username, setUsername] = useState<string>("");
   const [showPassword, setShowPassword] = useState<boolean>(false);
+  const navigate = useNavigate();
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -31,8 +33,18 @@ const SignUp: React.FC = () => {
     if (firstName && lastName && email && password) {
       try {
         console.log(username);
-        // API call to register user
-        // Send combinedUsername along with other data
+        const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/auth/login`, {
+          username,
+          firstName,
+          lastName,
+          email,
+          password,
+        });
+
+        if (response.status == 200) {
+          navigate("/login");
+        }
+
       } catch (error) {
         console.error("Error:", error);
       }
@@ -103,7 +115,7 @@ const SignUp: React.FC = () => {
               Username
             </label>
             <div className="relative flex items-center">
-            <IoPersonOutline className="absolute ml-3 text-lg text-gray-600" />
+              <IoPersonOutline className="absolute ml-3 text-lg text-gray-600" />
               <input
                 id="username"
                 name="username"
