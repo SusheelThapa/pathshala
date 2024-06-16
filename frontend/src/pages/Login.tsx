@@ -38,6 +38,7 @@ const Login: React.FC = () => {
           }
         );
         setToken(response.data.token);
+        localStorage.setItem("username",username);
         localStorage.setItem("token", response.data.token);
         navigate("/dashboard");
       } catch (error) {
