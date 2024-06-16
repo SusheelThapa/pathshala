@@ -9,7 +9,7 @@ import {
   IoEyeOffOutline,
 } from "react-icons/io5";
 
-import logo from "../../public/logo/logo.webp";
+import logo from "../assets/images/logo/logo.webp";
 
 const SignUp: React.FC = () => {
   const firstNameRef = useRef<HTMLInputElement>(null);

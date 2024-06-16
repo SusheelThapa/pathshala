@@ -9,7 +9,7 @@ import {
   IoEyeOffOutline,
 } from "react-icons/io5";
 
-import logo from "../../public/logo/logo.webp";
+import logo from "../assets/images/logo/logo.webp";
 
 const Login: React.FC = () => {
   const usernameRef = useRef<HTMLInputElement>(null);
@@ -30,10 +30,13 @@ const Login: React.FC = () => {
     // Ensure username and password are not null
     if (username && password) {
       try {
-        const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/auth/login`, {
-          username,
-          password,
-        });
+        const response = await axios.post(
+          `${import.meta.env.VITE_BACKEND_URL}/api/auth/login`,
+          {
+            username,
+            password,
+          }
+        );
         setToken(response.data.token);
         localStorage.setItem("token", response.data.token);
         navigate("/dashboard");
