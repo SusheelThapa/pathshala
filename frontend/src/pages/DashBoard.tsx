@@ -1,20 +1,15 @@
-// Dashboard.tsx
-import React from "react";
-import { useAuth } from "../components/AuthContext"; 
-import { Navigate } from "react-router-dom";
+// components/Dashboard.tsx
+import React from 'react';
+import useAuth from '../hooks/useAuth';
 
 const Dashboard: React.FC = () => {
-  const { token, loading } = useAuth(); 
+  const { isAuthenticated } = useAuth();
 
-  if (loading) {
-    return <div>Loading...</div>; 
+  if (!isAuthenticated) {
+    return <div>Redirecting...</div>; // Optional: Implement a better redirect logic or a loading spinner
   }
 
-  if (!token) {
-    return <Navigate to="/login" replace />;
-  }
-const username = localStorage.getItem("username")
-  return <h1>Dashboard: Protected Content Here, Loggedin user: {username}</h1>;
+  return <h1>Dashboard: Protected Content Here</h1>;
 };
 
 export default Dashboard;
