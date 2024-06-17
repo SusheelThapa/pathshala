@@ -1,4 +1,4 @@
-import { useRef, useState, FormEvent } from "react";
+import { useRef, useState, FormEvent, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import {
@@ -10,6 +10,7 @@ import {
 } from "react-icons/io5";
 
 import logo from "../assets/images/logo/logo.webp";
+import { AuthContext } from "../components/AuthContext";
 
 const SignUp: React.FC = () => {
   const firstNameRef = useRef<HTMLInputElement>(null);
@@ -19,6 +20,7 @@ const SignUp: React.FC = () => {
   const [username, setUsername] = useState<string>("");
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const navigate = useNavigate();
+  const { setToken } = useContext(AuthContext)!;
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -33,18 +35,22 @@ const SignUp: React.FC = () => {
     if (firstName && lastName && email && password) {
       try {
         console.log(username);
-        const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/auth/login`, {
-          username,
-          firstName,
-          lastName,
-          email,
-          password,
-        });
+        const response = await axios.post(
+          `${import.meta.env.VITE_BACKEND_URL}/api/auth/login`,
+          {
+            username,
+            firstName,
+            lastName,
+            email,
+            password,
+          }
+        );
 
         if (response.status == 200) {
+          setToken(response.data.token);
+          localStorage.setItem("token", response.data.token);
           navigate("/login");
         }
-
       } catch (error) {
         console.error("Error:", error);
       }

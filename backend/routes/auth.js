@@ -16,7 +16,9 @@ router.post("/login", async (req, res) => {
     if (!validPassword)
         return res.status(400).send("Invalid username or password.");
 
-    const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET);
+    const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, {
+        expiresIn: '86400s'
+    });
 
     res.send({ token });
 });
@@ -52,4 +54,5 @@ router.post("/register", async (req, res) => {
     }
 });
 
+router.post("/")
 module.exports = router;

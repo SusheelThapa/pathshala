@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "../components/AuthContext";
+import ProtectedRoute from "../components/ProtectedRoute";
 import Login from "../pages/Login";
 import SignUp from "../pages/SignUp";
 import Dashboard from "../pages/DashBoard";
@@ -11,7 +12,9 @@ const AppRoutes = () => {
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route element={<ProtectedRoute />}>
+            <Route path="/dashboard" element={<Dashboard />} />
+          </Route>
         </Routes>
       </AuthProvider>
     </Router>
