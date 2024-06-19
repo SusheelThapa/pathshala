@@ -73,7 +73,7 @@ const Dashboard: React.FC = () => {
         const response = await axios.get(fetchURL);
 
         if (response.status == 200) {
-          console.log(response.data)
+          console.log(response.data);
           setChannelPost(response.data);
         }
       } catch (error) {
@@ -94,19 +94,28 @@ const Dashboard: React.FC = () => {
 
   const handleChannelSelection = (newSelectedChannel: string) => {
     setSelectedChannel(newSelectedChannel);
-    setCurrentPage(1)
+    setCurrentPage(1);
   };
 
+  const handleAddNewPost = (newPost: ChannelPost) => {
+    //  API call to add new post
+    console.log(newPost);
+  };
   return (
     <Layout>
       <NavBar />
-      <div className="mx-auto my-10 p-4 py-8 w-11/12 h-[85vh] grid grid-cols-4 bg-stone-100 rounded-3xl justify-center r align-middle">
+      <div className="mx-auto my-10 p-4 py-8 w-11/12 h-[85vh]  grid grid-cols-4 bg-stone-100 rounded-3xl justify-center r align-middle">
         <SideBar
           selectedChannel={selectedChannel}
           onClickChannelListOption={handleChannelSelection}
           sidebarList={sideBarChannelList}
         />
-        <ChannelPosts posts={channelPost}  currentPage={currentPage} handlePageChange={setCurrentPage}/>
+        <ChannelPosts
+          posts={channelPost}
+          currentPage={currentPage}
+          handlePageChange={setCurrentPage}
+          handleAddNewPost={handleAddNewPost}
+        />
       </div>
     </Layout>
   );
