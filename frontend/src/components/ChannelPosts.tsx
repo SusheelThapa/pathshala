@@ -96,6 +96,7 @@ const ChannelPosts = ({
     return pages;
   };
 
+  console.log(permission)
   return (
     <div className=" text-sm col-span-4 w-full flex flex-col justify-between items-center">
       <div className="w-full flex flex-col justify-between items-center">
