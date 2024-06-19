@@ -1,9 +1,13 @@
 // components/Dashboard.tsx
-import React from 'react';
-import useAuth from '../hooks/useAuth';
+import React from "react";
+import useAuth from "../hooks/useAuth";
 
 const Dashboard: React.FC = () => {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, loading } = useAuth();
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   if (!isAuthenticated) {
     return <div>Redirecting...</div>; // Optional: Implement a better redirect logic or a loading spinner

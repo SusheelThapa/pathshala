@@ -6,14 +6,14 @@ import {jwtDecode, JwtPayload} from "jwt-decode";
 import { AuthContext } from "../components/AuthContext"; // Adjust the import path as necessary
 
 const useAuth = () => {
-  const { token, setToken } = useContext(AuthContext)!;
+  const { token, setToken ,loading} = useContext(AuthContext)!;
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (token && !isTokenValid(token)) {
+    if (!loading &&token && !isTokenValid(token)) {
       logout();
     }
-  }, [token]);
+  }, [loading,token]);
 
   const isTokenValid = (token: string): boolean => {
     try {
@@ -40,6 +40,7 @@ const useAuth = () => {
     isAuthenticated: token !== null && isTokenValid(token),
     logout,
     setToken,
+    loading
   };
 };
 
