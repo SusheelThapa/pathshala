@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from "react";
 import useAuth from "../hooks/useAuth";
 import { ChannelPost } from "../types/types";
-import { stringToDate } from "../utils/stringToDate";
 import SideBar from "../components/SideBar";
 import ChannelPosts from "../components/ChannelPosts";
 import { TbBeta, TbDelta } from "react-icons/tb";
@@ -57,15 +56,8 @@ const Dashboard: React.FC = () => {
   const { isAuthenticated, loading } = useAuth();
   const [selectedChannel, setSelectedChannel] =
     useState<string>("daily-notice");
-  const [channelPost, setChannelPost] = useState<ChannelPost[]>([
-    {
-      postedBy: "JohnDoe",
-      postedTo: "Daily Notice",
-      message:
-        "Hello everyone, this is a sample post to the Daily Notice channel.",
-      postedOn: stringToDate("2024-06-19T12:00:00Z"),
-    },
-  ]);
+  const [channelPost, setChannelPost] = useState<ChannelPost[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     // Retrieve the message from backend
@@ -102,7 +94,9 @@ const Dashboard: React.FC = () => {
 
   const handleChannelSelection = (newSelectedChannel: string) => {
     setSelectedChannel(newSelectedChannel);
+    setCurrentPage(1)
   };
+
   return (
     <Layout>
       <NavBar />
@@ -112,7 +106,7 @@ const Dashboard: React.FC = () => {
           onClickChannelListOption={handleChannelSelection}
           sidebarList={sideBarChannelList}
         />
-        <ChannelPosts posts={channelPost} />
+        <ChannelPosts posts={channelPost}  currentPage={currentPage} handlePageChange={setCurrentPage}/>
       </div>
     </Layout>
   );

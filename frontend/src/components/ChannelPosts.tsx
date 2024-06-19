@@ -5,21 +5,22 @@ import { stringToDate } from "../utils/stringToDate";
 
 interface Props {
   posts: ChannelPost[];
+  currentPage: number;
+  handlePageChange: (currentPage: number) => void;
   // handleAddNewPost: (newPost: ChannelPost) => void;
 }
 
-const ChannelPosts = ({ posts }: Props) => {
+const ChannelPosts = ({ posts, currentPage, handlePageChange }: Props) => {
   const postsPerPage = 3;
   const totalPages = Math.ceil(posts.length / postsPerPage);
   const displayPages = 3;
-  const [currentPage, setCurrentPage] = useState(1);
 
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
 
   const paginate = (pageNumber: number) => {
-    setCurrentPage(pageNumber);
+    handlePageChange(pageNumber);
   };
 
   const getPostAgeString = (providedDate: Date): string => {
@@ -69,7 +70,7 @@ const ChannelPosts = ({ posts }: Props) => {
       pages.push(
         <button
           key={i}
-          onClick={() => paginate(i)}
+          onClick={() => handlePageChange(i)}
           className={`mx-2 p-2  flex justify-center items-center rounded-md font-bold   ${
             currentPage === i
               ? "bg-[#f96a46] text-white text-base w-10 h-10"
@@ -88,10 +89,10 @@ const ChannelPosts = ({ posts }: Props) => {
     <div className=" text-sm col-span-3 w-full flex flex-col justify-between items-center">
       {/* <AddCommunityPost handleAddNewPost={handleAddNewPost} /> */}
       <div className="flex justify-center flex-col items-center gap-8 m-6 w-full">
-        {currentPosts.map(({ postedBy, message, postedOn }) => {
+        {currentPosts.map(({ postedBy, message, postedOn, _id }) => {
           return (
             <div
-              key={postedBy}
+              key={_id}
               className="rounded-2xl bg-white px-12 py-10 w-4/5 flex flex-col gap-6"
             >
               <div className="flex justify-between items-center">
