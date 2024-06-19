@@ -30,7 +30,7 @@ const NavBar = () => {
         </ul>
       </div>
 
-      <div className=" bg-[#f96a46] p-3 px-5 rounded-xl text-white font-semibold tracking-widest">
+      <div className=" bg-[#f96a46] shadow-md shadow-[#fdbaa9] p-3 px-5 rounded-xl text-white font-semibold tracking-widest">
         <div className="text-base">
           {localStorage.getItem("username")!.toUpperCase()}
         </div>

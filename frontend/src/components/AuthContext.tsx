@@ -1,18 +1,15 @@
 import React, { createContext, useState, useEffect, ReactNode } from "react";
 
-// Define the type for the context state
 interface AuthContextType {
   token: string | null;
   setToken: (token: string | null) => void;
   loading: boolean;
 }
 
-// Create the context with a default undefined state
 export const AuthContext = createContext<AuthContextType | undefined>(
   undefined
 );
 
-// Define the type for the provider props
 interface AuthProviderProps {
   children: ReactNode;
 }

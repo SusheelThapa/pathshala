@@ -9,8 +9,12 @@ const useAuth = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!loading && token && !isTokenValid(token)) {
-      logout();
+    if (!loading) {
+      if (token && isTokenValid(token)) {
+        navigate("/dashboard");
+      } else if (token && !isTokenValid(token)) {
+        logout();
+      }
     }
   }, [loading, token]);
 
@@ -18,10 +22,9 @@ const useAuth = () => {
     try {
       const decoded = jwtDecode<JwtPayload>(token);
       const currentTime = Date.now() / 1000;
+      console.log(decoded.exp! > currentTime)
       return decoded.exp! > currentTime;
     } catch (error) {
-      console.log(error);
-      console.log("token valid issue");
       return false;
     }
   };
