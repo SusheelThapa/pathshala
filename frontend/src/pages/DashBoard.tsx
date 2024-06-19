@@ -58,10 +58,17 @@ const Dashboard: React.FC = () => {
     useState<string>("daily-notice");
   const [channelPost, setChannelPost] = useState<ChannelPost[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [permission, setPermission] = useState<{
+    create: boolean;
+    read: boolean;
+    delete: boolean;
+  }>({
+    create: false,
+    read: false,
+    delete: false,
+  });
 
   useEffect(() => {
-    // Retrieve the message from backend
-    // if response is success and check for loading and isAuthenticated
     const fetchChannelPost = async () => {
       try {
         let fetchURL = "http://localhost:3001/api/channelpost";
@@ -81,7 +88,26 @@ const Dashboard: React.FC = () => {
         setChannelPost([]);
       }
     };
+
+    const fetchPermission = async () => {
+      try {
+        const username = localStorage.getItem("username");
+        console.log(username);
+        const response = await axios.get(
+          `http://localhost:3001/api/permissions?username=${username}&resource=${selectedChannel}`
+        );
+        console.log(response.data);
+        setPermission(response.data);
+      } catch (error) {
+        console.log(
+          "Some error occurred while fetching permission details",
+          error
+        );
+      }
+    };
+
     fetchChannelPost();
+    fetchPermission();
   }, [selectedChannel]);
 
   if (loading) {
@@ -114,9 +140,8 @@ const Dashboard: React.FC = () => {
     } catch (error) {
       console.log(error);
     }
-    //  API call to add new post
-    console.log(newPost);
   };
+
   return (
     <Layout>
       <NavBar />
@@ -126,11 +151,13 @@ const Dashboard: React.FC = () => {
           onClickChannelListOption={handleChannelSelection}
           sidebarList={sideBarChannelList}
         />
+
         <ChannelPosts
           posts={channelPost}
           currentPage={currentPage}
           handlePageChange={setCurrentPage}
           handleAddNewPost={handleAddNewPost}
+          permission={permission}
         />
       </div>
     </Layout>
