@@ -1,31 +1,30 @@
 import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import {jwtDecode, JwtPayload} from "jwt-decode";
-
+import { jwtDecode, JwtPayload } from "jwt-decode";
 
 import { AuthContext } from "../components/AuthContext"; // Adjust the import path as necessary
 
 const useAuth = () => {
-  const { token, setToken ,loading} = useContext(AuthContext)!;
+  const { token, setToken, loading } = useContext(AuthContext)!;
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!loading &&token && !isTokenValid(token)) {
-      logout();
+    if (!loading) {
+      if (token && isTokenValid(token)) {
+        navigate("/dashboard");
+      } else if (token && !isTokenValid(token)) {
+        logout();
+      }
     }
-  }, [loading,token]);
+  }, [loading, token]);
 
   const isTokenValid = (token: string): boolean => {
     try {
-        console.log(token)
       const decoded = jwtDecode<JwtPayload>(token);
-      console.log(decoded)
       const currentTime = Date.now() / 1000;
-      console.log(currentTime<decoded.exp!)
+      console.log(decoded.exp! > currentTime)
       return decoded.exp! > currentTime;
     } catch (error) {
-        console.log(error)
-        console.log("token valid issue")
       return false;
     }
   };
@@ -40,7 +39,7 @@ const useAuth = () => {
     isAuthenticated: token !== null && isTokenValid(token),
     logout,
     setToken,
-    loading
+    loading,
   };
 };
 

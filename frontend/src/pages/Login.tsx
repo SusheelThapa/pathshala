@@ -1,7 +1,6 @@
-import { useRef, useState, FormEvent, useContext } from "react";
+import { useRef, useState, FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { AuthContext } from "../components/AuthContext";
 import {
   IoPersonAddOutline,
   IoLockClosedOutline,
@@ -10,12 +9,13 @@ import {
 } from "react-icons/io5";
 
 import logo from "../assets/images/logo/logo.webp";
+import useAuth from "../hooks/useAuth";
 
 const Login: React.FC = () => {
   const usernameRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
   const [showPassword, setShowPassword] = useState<boolean>(false);
-  const { setToken } = useContext(AuthContext)!;
+  const { setToken } = useAuth();
   const navigate = useNavigate();
 
   const togglePasswordVisibility = () => {
