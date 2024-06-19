@@ -1,11 +1,10 @@
 import { Link } from "react-router-dom";
 
 import logo from "../assets/images/logo/logo.webp";
-import { getInitial } from "../utils/getInitial";
 
 const NavBar = () => {
   return (
-    <div className=" flex justify-between items-center h-16 text-xl text-black">
+    <div className=" flex justify-between items-center h-16 text-xl text-black my-10">
       {/* Logo section */}
       <Link to="/dashboard">
         <div className="flex gap-2 items-end justify-end">
@@ -31,8 +30,10 @@ const NavBar = () => {
         </ul>
       </div>
 
-      <div className="w-16 h-16 bg-[#ff6f4b] rounded-full flex justify-center items-center text-white text-2xl font-black">
-        {getInitial(localStorage.getItem("username") || "U")}
+      <div className=" bg-[#f96a46] p-3 px-5 rounded-xl text-white font-semibold tracking-widest">
+        <div className="text-base">
+          {localStorage.getItem("username")!.toUpperCase()}
+        </div>
       </div>
     </div>
   );
