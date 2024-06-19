@@ -12,6 +12,8 @@ import {
   SiOpensourcehardware,
 } from "react-icons/si";
 import { FaHome, FaBaby } from "react-icons/fa";
+import NavBar from "../components/NavBar";
+import Layout from "../layouts/Layout";
 
 const sideBarChannelList = [
   {
@@ -130,14 +132,17 @@ const Dashboard: React.FC = () => {
     setSelectedChannel(newSelectedChannel);
   };
   return (
-    <div className="mx-auto my-10 p-4 w-10/12 h-[85vh] grid grid-cols-4 bg-stone-100 rounded-3xl justify-center r align-middle">
-      <SideBar
-        selectedChannel={selectedChannel}
-        onClickChannelListOption={handleChannelSelection}
-        sidebarList={sideBarChannelList}
-      />
-      <ChannelPosts posts={channelPost} />
-    </div>
+    <Layout>
+      <NavBar />
+      <div className="mx-auto my-10 p-4 py-8 w-11/12 h-[85vh] grid grid-cols-4 bg-stone-100 rounded-3xl justify-center r align-middle">
+        <SideBar
+          selectedChannel={selectedChannel}
+          onClickChannelListOption={handleChannelSelection}
+          sidebarList={sideBarChannelList}
+        />
+        <ChannelPosts posts={channelPost} />
+      </div>
+    </Layout>
   );
 };
 
