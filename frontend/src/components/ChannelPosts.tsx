@@ -1,4 +1,3 @@
-
 import { ChannelPost } from "../types/types";
 import { stringToDate } from "../utils/stringToDate";
 import AddChannelPost from "../components/AddChannelPost";
@@ -7,10 +6,15 @@ interface Props {
   posts: ChannelPost[];
   currentPage: number;
   handlePageChange: (currentPage: number) => void;
-  handleAddNewPost: (newPost: ChannelPost) => void;
+  handleAddNewPost: (newPost: { message: string }) => void;
 }
 
-const ChannelPosts = ({ posts, currentPage, handlePageChange ,handleAddNewPost}: Props) => {
+const ChannelPosts = ({
+  posts,
+  currentPage,
+  handlePageChange,
+  handleAddNewPost,
+}: Props) => {
   const postsPerPage = 3;
   const totalPages = Math.ceil(posts.length / postsPerPage);
   const displayPages = 3;
@@ -99,7 +103,7 @@ const ChannelPosts = ({ posts, currentPage, handlePageChange ,handleAddNewPost}:
                 <div className="flex justify-between items-center">
                   <div className="flex gap-5  items-center">
                     <div className="text-lg text-gray-600 flex flex-col">
-                      <div>{postedBy}</div>
+                      <div>{postedBy.toUpperCase()}</div>
                       <div className="text-sm text-stone-400">
                         {getPostAgeString(stringToDate(postedOn))}
                       </div>

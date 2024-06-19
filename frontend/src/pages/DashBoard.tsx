@@ -97,7 +97,23 @@ const Dashboard: React.FC = () => {
     setCurrentPage(1);
   };
 
-  const handleAddNewPost = (newPost: ChannelPost) => {
+  const handleAddNewPost = async (newPost: { message: string }) => {
+    try {
+      const response = await axios.post(
+        "http://localhost:3001/api/channelpost",
+        {
+          postedBy: localStorage.getItem("username"),
+          postedTo: selectedChannel,
+          message: newPost.message,
+        }
+      );
+
+      if (response.status == 201) {
+        setChannelPost([response.data, ...channelPost]);
+      }
+    } catch (error) {
+      console.log(error);
+    }
     //  API call to add new post
     console.log(newPost);
   };

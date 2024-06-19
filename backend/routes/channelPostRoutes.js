@@ -24,17 +24,18 @@ router.post('', async (req, res) => {
 // Endpoint to get posts by channel
 router.get('', async (req, res) => {
     const { channel } = req.query;
-console.log(channel)
+
     if (!channel) {
         return res.status(400).json({ error: 'Channel query parameter is required.' });
     }
 
     try {
-        const posts = await ChannelPost.find({ postedTo: channel });
+        const posts = await ChannelPost.find({ postedTo: channel }).sort({ postedOn: -1 });
         res.status(200).json(posts);
     } catch (error) {
         res.status(500).json({ error: 'Failed to retrieve posts.' });
     }
 });
+
 
 module.exports = router;
