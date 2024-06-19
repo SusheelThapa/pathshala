@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 import { ChannelPost } from "../types/types";
+import { stringToDate } from "../utils/stringToDate";
 
 interface Props {
   posts: ChannelPost[];
@@ -98,7 +99,7 @@ const ChannelPosts = ({ posts }: Props) => {
                   <div className="text-lg text-gray-600 flex flex-col">
                     <div>{postedBy}</div>
                     <div className="text-sm text-stone-400">
-                      {getPostAgeString(postedOn)}
+                      {getPostAgeString(stringToDate(postedOn))}
                     </div>
                   </div>
                 </div>

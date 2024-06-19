@@ -14,41 +14,49 @@ import {
 import { FaHome, FaBaby } from "react-icons/fa";
 import NavBar from "../components/NavBar";
 import Layout from "../layouts/Layout";
+import axios from "axios";
 
 const sideBarChannelList = [
   {
     icon: <SiDailydotdev />,
     title: "Daily Notice",
+    endPoint: "daily-notice",
   },
   {
     icon: <TbDelta />,
     title: "Delta Group",
+    endPoint: "delta-group",
   },
   {
     icon: <TbBeta />,
     title: "Beta Group",
+    endPoint: "beta-group",
   },
   {
     icon: <SiYoutubegaming />,
     title: "Gaming",
+    endPoint: "gaming",
   },
   {
     icon: <SiOpensourcehardware />,
     title: "Kontribution",
+    endPoint: "kontribution",
   },
   {
     icon: <FaHome />,
     title: "Hostel",
+    endPoint: "hostel",
   },
   {
     icon: <FaBaby />,
     title: "General",
+    endPoint: "general",
   },
 ];
 const Dashboard: React.FC = () => {
   const { isAuthenticated, loading } = useAuth();
   const [selectedChannel, setSelectedChannel] =
-    useState<string>("Daily Notice");
+    useState<string>("daily-notice");
   const [channelPost, setChannelPost] = useState<ChannelPost[]>([
     {
       postedBy: "JohnDoe",
@@ -62,62 +70,26 @@ const Dashboard: React.FC = () => {
   useEffect(() => {
     // Retrieve the message from backend
     // if response is success and check for loading and isAuthenticated
-    setChannelPost([
-      {
-        postedBy: "JaneSmith",
-        postedTo: "Alpha Group",
-        message:
-          "Welcome to the Alpha Group! Let's get started with our project.",
-        postedOn: stringToDate("2024-06-19T12:00:00Z"),
-      },
-      {
-        postedBy: "CarolWhite",
-        postedTo: "Kontribution",
-        message:
-          "Please contribute your ideas for the upcoming event in the Kontribution channel.",
-        postedOn: stringToDate("2024-06-19T12:00:00Z"),
-      },
-      {
-        postedBy: "DaveBlack",
-        postedTo: "Hostel",
-        message:
-          "Hostel residents are invited to a community dinner this weekend.",
-        postedOn: stringToDate("2024-06-19T12:00:00Z"),
-      },
-      {
-        postedBy: "BobBrown",
-        postedTo: "Gaming",
-        message: "Join us for a gaming session tonight at 8 PM.",
-        postedOn: stringToDate("2024-06-19T12:00:00Z"),
-      },
-      {
-        postedBy: "JaneSmith",
-        postedTo: "Alpha Group",
-        message:
-          "Welcome to the Alpha Group! Let's get started with our project.",
-        postedOn: stringToDate("2024-06-19T12:00:00Z"),
-      },
-      {
-        postedBy: "CarolWhite",
-        postedTo: "Kontribution",
-        message:
-          "Please contribute your ideas for the upcoming event in the Kontribution channel.",
-        postedOn: stringToDate("2024-06-19T12:00:00Z"),
-      },
-      {
-        postedBy: "DaveBlack",
-        postedTo: "Hostel",
-        message:
-          "Hostel residents are invited to a community dinner this weekend.",
-        postedOn: stringToDate("2024-06-19T12:00:00Z"),
-      },
-      {
-        postedBy: "BobBrown",
-        postedTo: "Gaming",
-        message: "Join us for a gaming session tonight at 8 PM.",
-        postedOn: stringToDate("2024-06-19T12:00:00Z"),
-      },
-    ]);
+    const fetchChannelPost = async () => {
+      try {
+        let fetchURL = "http://localhost:3001/api/channelpost";
+        if (selectedChannel == null) {
+          fetchURL += "?channel=daily-notice";
+        } else {
+          fetchURL += `?channel=${selectedChannel}`;
+        }
+        const response = await axios.get(fetchURL);
+
+        if (response.status == 200) {
+          console.log(response.data)
+          setChannelPost(response.data);
+        }
+      } catch (error) {
+        console.log(error);
+        setChannelPost([]);
+      }
+    };
+    fetchChannelPost();
   }, [selectedChannel]);
 
   if (loading) {

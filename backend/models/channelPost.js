@@ -5,7 +5,7 @@ const ChannelPostSchema = new mongoose.Schema({
   postedTo: { 
     type: String, 
     required: true,
-    enum: ['daily-notice', 'alpha-group', 'beta-group', 'gaming', 'kontribution', 'hostel', 'general'] 
+    enum: ['daily-notice', 'delta-group', 'beta-group', 'gaming', 'kontribution', 'hostel', 'general'] 
   },
   message: { type: String, required: true },
   postedOn: { type: Date, default: Date.now }
