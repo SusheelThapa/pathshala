@@ -90,7 +90,7 @@ const ChannelPosts = ({
   };
 
   return (
-    <div className=" text-sm col-span-3 w-full flex flex-col justify-between items-center">
+    <div className=" text-sm col-span-4 w-full flex flex-col justify-between items-center">
       <div className="w-full flex flex-col justify-between items-center">
         <AddChannelPost handleAddNewPost={handleAddNewPost} />
         <div className="flex justify-center flex-col items-center gap-6 m-6 w-full">

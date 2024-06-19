@@ -120,7 +120,7 @@ const Dashboard: React.FC = () => {
   return (
     <Layout>
       <NavBar />
-      <div className="mx-auto my-10 p-4 py-8 w-11/12 h-[85vh]  grid grid-cols-4 bg-stone-100 rounded-3xl justify-center r align-middle">
+      <div className="mx-auto my-16 p-4 py-8 w-11/12 h-[85vh]  grid grid-cols-5 bg-stone-100 rounded-3xl justify-center r align-middle">
         <SideBar
           selectedChannel={selectedChannel}
           onClickChannelListOption={handleChannelSelection}

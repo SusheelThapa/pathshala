@@ -33,7 +33,7 @@ const SideBar = ({
             >
               {icon}
             </div>
-            <div className="flex justify-center items-center">{title}</div>
+            <div className="flex justify-center items-center text-base">{title}</div>
           </li>
         ))}
       </ul>

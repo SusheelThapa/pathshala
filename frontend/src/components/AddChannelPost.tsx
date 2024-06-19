@@ -12,7 +12,7 @@ const AddChannelPost = ({ handleAddNewPost }: Props) => {
     <>
       <div
         onClick={() => setPostFormActive(true)}
-        className="py-4 text-lg hover:bg-[#f96a46] hover:text-white flex  justify-center items-center gap-4 m-6 w-4/5 bg-white rounded-xl cursor-pointer"
+        className="py-4 text-lg hover:bg-[#f96a46ee] hover:text-white flex  justify-center items-center gap-4 m-6 w-4/5 bg-white rounded-xl cursor-pointer"
       >
         <AiOutlinePlus size={24} />
         <div className="flex justify-center items-center font-extrabold">
