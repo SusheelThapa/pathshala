@@ -6,6 +6,7 @@ import SignUp from "../pages/SignUp";
 import Dashboard from "../pages/DashBoard";
 import ContactUs from "../pages/ContactUs";
 import AssignRoles from "../pages/AssignRoles";
+import About from "../pages/About";
 
 const AppRoutes = () => {
   return (
@@ -17,6 +18,7 @@ const AppRoutes = () => {
           <Route element={<ProtectedRoute />}>
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/contact-us" element={<ContactUs />} />
+            <Route path="/about" element={<About />} />
             <Route path="/view-roles" element={<AssignRoles />} />
           </Route>
         </Routes>
