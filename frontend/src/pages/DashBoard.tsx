@@ -14,6 +14,7 @@ import { FaHome, FaBaby } from "react-icons/fa";
 import NavBar from "../components/NavBar";
 import Layout from "../layouts/Layout";
 import axios from "axios";
+import Footer from "../components/Footer";
 
 const sideBarChannelList = [
   {
@@ -160,6 +161,7 @@ const Dashboard: React.FC = () => {
           permission={permission}
         />
       </div>
+      <Footer/>
     </Layout>
   );
 };

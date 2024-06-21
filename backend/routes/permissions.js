@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const checkPermissions = require('../utils/checkPermission');
+const {checkPermissions} = require('../utils/checkPermission');
 
 
 router.get('', async (req, res) => {

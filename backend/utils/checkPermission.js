@@ -2,8 +2,8 @@ const { Permit } = require('permitio');
 
 
 const permit = new Permit({
-    pdp: 'YOUR-PDP-URL',
-    token: 'YOUR_TOKEN',
+    pdp: 'http://localhost:7766',
+    token: 'permit_key_CMsXae8FSaocUJipFWAGrV5VazIjfV4VhALRHSd08TBWi03sPK7gMk17ehij5NKADbMJUVku6N4kGPHkZBSTYs',
 });
 
 
@@ -25,4 +25,10 @@ const checkPermissions = async (username, resource) => {
     }
 }
 
-module.exports = checkPermissions
+const checkRole = async (username) => {
+    const role = await permit.api.getAssignedRoles(username)
+    const roles = role.map(record => record.role);
+    return roles
+}
+
+module.exports = { checkPermissions, checkRole }

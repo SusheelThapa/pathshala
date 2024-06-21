@@ -40,6 +40,7 @@ const Login: React.FC = () => {
         setToken(response.data.token);
         localStorage.setItem("username",username);
         localStorage.setItem("token", response.data.token);
+        localStorage.setItem("role", response.data.role);
         navigate("/dashboard");
       } catch (error) {
         console.error("Error:", error);
