@@ -4,6 +4,8 @@ const User = require("../models/user");
 const router = express.Router();
 const bcrypt = require("bcrypt");
 
+const { checkRole } = require("../utils/checkPermission")
+
 router.post("/login", async (req, res) => {
     const { username, password } = req.body;
 
@@ -19,8 +21,8 @@ router.post("/login", async (req, res) => {
     const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, {
         expiresIn: '86400s'
     });
-
-    res.send({ token });
+    const role = await checkRole(username);
+    res.send({ token ,role});
 });
 
 router.post("/register", async (req, res) => {
@@ -54,5 +56,21 @@ router.post("/register", async (req, res) => {
     }
 });
 
-router.post("/")
+router.get("/users", async (req, res) => {
+    const users = await User.find();
+
+    for (let i = 0; i < users.length; i++) {
+        const role = await checkRole(users[i].username); // Corrected property access
+        users[i].role = role;
+    }
+
+    const usersWithRoles = users.map(user => ({
+        username: user.username,
+        role: user.role
+    }));
+
+    console.log(usersWithRoles);
+    res.send(usersWithRoles);
+
+})
 module.exports = router;

@@ -17,7 +17,7 @@ const AppRoutes = () => {
           <Route element={<ProtectedRoute />}>
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/contact-us" element={<ContactUs />} />
-            <Route path="/assign-roles" element={<AssignRoles />} />
+            <Route path="/view-roles" element={<AssignRoles />} />
           </Route>
         </Routes>
       </AuthProvider>

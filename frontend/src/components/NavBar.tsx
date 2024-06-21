@@ -10,8 +10,15 @@ const NavBar = () => {
     // Clear local storage and redirect to login page or home page
     localStorage.removeItem("username");
     localStorage.removeItem("token");
-    navigate("/login");
+    localStorage.removeItem("role");
+
+    setTimeout(() => {
+      navigate("/login");
+    }, 1000);
   };
+
+  const role = localStorage.getItem("role");
+  const isAdmin = role === "admin";
 
   return (
     <div className="flex justify-between items-center h-16 text-xl text-black my-10">
@@ -31,15 +38,17 @@ const NavBar = () => {
           <li className="hover:text-[#f96a46] cursor-pointer text-lg">
             <Link to="/dashboard">Dashboard</Link>
           </li>
-          <li className="hover:text-[#f96a46] cursor-pointer text-lg">
+          <li className="hover:text-[#`f96a46] cursor-pointer text-lg">
             <Link to="/about">About</Link>
           </li>
           <li className="hover:text-[#f96a46] cursor-pointer text-lg">
             <Link to="/contact-us">Contact us</Link>
           </li>
-          <li className="hover:text-[#f96a46] cursor-pointer text-lg">
-            <Link to="/assign-roles">Assign Roles</Link>
-          </li>
+          {isAdmin && (
+            <li className="hover:text-[#f96a46] cursor-pointer text-lg">
+              <Link to="/view-roles">View Roles</Link>
+            </li>
+          )}
         </ul>
       </div>
 
