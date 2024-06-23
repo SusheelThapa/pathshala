@@ -44,7 +44,13 @@
    PDP_TOKEN=permit_key_CMsXae8FSaocUJipFWAGrV5VazIjfV4VhALRHSd08TBWi03sPK7gMk17ehij5NKADbMJUVku6N4kGPHkZBSTYs
    ```
 
-5. Run the backend server
+5. Populate the user
+
+   ```bash
+   node populateUsers.js
+   ```
+
+6. Run the backend server
 
    ```bash
    node server.js
